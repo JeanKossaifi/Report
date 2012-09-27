@@ -25,7 +25,7 @@ Second implementation
 
 The second implementation was modifying inplace the array argument: 
 
-.. code::
+.. code-block:: python
 
    def prox_l21(u, l, n_samples, n_kernels):
        """
@@ -37,12 +37,16 @@ The second implementation was modifying inplace the array argument:
        return u
 
 
+Memory use
+----------
+
 Test program
 ++++++++++++
 
 We used memory_profiler for the tests. This is a tool that monitors, for every line of the program, the amount of memory (RAM) used.
 
-.. code::
+.. code-block:: python
+   :linenos:
 
    from fista import prox_l21, test_prox_l21
    import numpy as np
@@ -55,6 +59,8 @@ We used memory_profiler for the tests. This is a tool that monitors, for every l
          u = prox_l21(u, 0.5, 5000, 10)
 
    profile(u)
+
+To test the other program, we replace *prox_l21* by *test_prox_l21*.
 
 Results
 +++++++
@@ -216,7 +222,7 @@ Version 1
 Version 2
 +++++++++
 
-.. code:: python
+.. code-block:: python
 
    def test_prox_l21(u, l, n_samples, n_kernels):
        """
