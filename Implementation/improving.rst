@@ -4,7 +4,7 @@ Improving prox p=2, q=1
 First implementation
 --------------------
 
-The fist implementation was the following :
+The fist implementation consisted of creating a new numpy array of the correct shape and then filling it with the corresponding values :
 
 .. code::
 
@@ -23,7 +23,7 @@ The fist implementation was the following :
 Second implementation
 ---------------------
 
-The second implementation was this one : 
+The second implementation was modifying inplace the array argument: 
 
 .. code::
 
@@ -40,7 +40,7 @@ The second implementation was this one :
 Test program
 ++++++++++++
 
-We used memory_profiler for the tests :
+We used memory_profiler for the tests. This is a tool that monitors, for every line of the program, the amount of memory (RAM) used.
 
 .. code::
 
@@ -58,6 +58,8 @@ We used memory_profiler for the tests :
 
 Results
 +++++++
+
+The results are summarised in the following tables.
 
 For the fist implementation :
 *****************************
@@ -88,6 +90,10 @@ Line #    Mem usage  Increment   Line Contents
 Execution time
 --------------
 
+The second criterion to consider is execution speed. 
+
+To monitor it we use an IPython *magic*, %timeit, that indicates the execution time of a given piece of code by executing it several times and taking the average.
+
 >>> u = np.arange(5000*10)
 
 For the fist implementation
@@ -114,6 +120,8 @@ Another improvement
 Code
 ++++
 
+In this new version we reshape u, so that the new vector has as many lines as there are kernels, to be able to process kernel by kernel:
+
 .. code::
 
     def test_prox_l21(u, l, n_samples, n_kernels):
@@ -123,6 +131,8 @@ Code
 
 Execution_time
 ++++++++++++++
+
+We compare the execution time of this new version compared to the former one.
 
 Last version :
 **************
@@ -148,6 +158,8 @@ New version :
 
 return res*u vs res=res*u; return res
 -------------------------------------
+
+Here, we check if the way in which we return the result has any influence.
 
 Return after affectation
 +++++++++++++
@@ -229,6 +241,8 @@ Results
 Improving prox p=1 and q=2
 ==========================
 
+Version that creates a new array and fill it :
+
 .. code::
 
    def prox_l12(u, l, n_samples, n_kernels):
@@ -241,6 +255,8 @@ Improving prox p=1 and q=2
            i = np.sign(i)*np.maximum(np.abs(i)-(l*sum_Ml)/((1+l*Ml)*norm(i, 2)), 0)
        return u.reshape(n_kernels*n_samples)
 
+
+Version that modifies the given array inplace:
 
 .. code::
 
@@ -255,8 +271,7 @@ Improving prox p=1 and q=2
 
 Results
 -------
-
-
+We ran different tests with different data
 
 >>> %timeit prox_l12_test(u, 0.5, 5000, 10)
 100 loops, best of 3: 3.17 ms per loop
@@ -265,6 +280,8 @@ Results
 
 >>> %timeit prox_l12(u, 0.5, 5000, 10)
 100 loops, best of 3: 3.18 ms per loop
+
+Creating a new test array :
 
 >>> u = np.arange(50000*10)
 
@@ -276,11 +293,13 @@ Results
 >>> %timeit prox_l12_test(u, 0.5, 50000, 10)
 10 loops, best of 3: 23.4 ms per loop
 
-So we chose the second (test) version
+So we chose the second (test) version, the faster one.
 
 
 More advanced test
 ------------------
+
+Simple inplace modification version :
 
 .. code::
 
@@ -292,6 +311,8 @@ More advanced test
            Ml, sum_Ml = compute_M(i, l, n_samples)
            i = np.sign(i)*np.maximum(np.abs(i)-(l*sum_Ml)/((1+l*Ml)*norm(i, 2)), 0)
        return u
+
+Complex version creating a new array and filling it appropriately:
 
 .. code::
 

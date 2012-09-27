@@ -1,15 +1,5 @@
 MIKL model
 ==========
 
-General MIKL model
+The goal of this work is to combine information from different sources to be able to yield the best possible prediction. Additionally, we only consider supervised binary classification. This can be generalised to multiple classification by using *one against all* for example.
 
-.. math::
-
-
-   \mathbf{\Delta} = 
-    \begin{pmatrix}
-    1      & -1     &  0     & \cdots & 0\\
-    0      & 1      & -1     & \cdots & 0\\
-    \vdots & \vdots & \vdots & \ddots & 0\\
-    0      & 0      & 0      & \cdots & -1\\
-    \end{pmatrix}
