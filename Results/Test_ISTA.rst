@@ -1,5 +1,14 @@
+As previously said, ISTA is not the version used.
+
+However, this version has the advantage to be monotone. Thus, it is practical to test the prox functions as well as the sub-functions.
+
+
 Loading iris dataset
 ====================
+
+A toy dataset, the famous "iris dataset" is used. 
+
+We build simple linear kernel by using scalar product.
 
 In[2]:
 
@@ -33,6 +42,8 @@ In[2]:
 
 No penalisation (lambda_=0)
 ===========================
+
+Here we use no penalisation.
 
 In[3]:
 
@@ -139,6 +150,7 @@ In[3]:
     /usr/lib/python2.7/site-packages/numpy/lib/utils.py:1132: DeprecationWarning: The compiler package is deprecated and removed in Python 3.x.
       import compiler
 
+As expected, the objective functions steadily decrease.
 
 Using penalisation (lambda_=0.1)
 ================================
@@ -238,6 +250,8 @@ In[4]:
     Percent of good classification : 100/100
     Number of nulled coefficients : 99/400
 
+Again, the objective functions steadily decrease.
+However, it seems that there is a numerical instability.
 
 Dual gap evolution
 ==================
