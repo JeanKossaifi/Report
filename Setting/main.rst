@@ -1,5 +1,6 @@
-Results
+Setting
 =======
 
 .. toctree::
    
+   setting
