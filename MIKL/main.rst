@@ -3,6 +3,8 @@ MIKL
 
 .. toctree::
    
+   MKL
    model
-   mixed_norm 
+   mixed_norms
    FISTA
+   convergence
