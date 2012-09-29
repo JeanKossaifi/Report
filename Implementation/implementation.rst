@@ -37,9 +37,6 @@ It can be observed that :math:`X * \alpha` is effectively of shape (n_samples, 1
 
 We are here computing the proximity operator with p=1, q=2, r=2 of :math:`\check u`, which can be rewritten as follows.
 
-.. warning::
-
-   is :math:`\check u_{n_{samples}}` readable ??
 
 .. math::
 

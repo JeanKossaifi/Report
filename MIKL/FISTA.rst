@@ -66,16 +66,19 @@ Algorithm
                            & $ Z^{(1)} = \beta^{(0)}$\\
          & $\tau^{(1)} = 1$\\
          & $ k = 1$\\
-         & $\mu = \frac{1}{|| X^* X ||}$\\
+         & $\mu = \frac{1}{|| K^* K ||} < \frac{2}{\|K K^T\|_2}$ (Lipschitz constant)\\
+         & $K_y = \text{diag}(y) K$\\
+         & $\lambda =$ penalisation coefficient\\
      \end{tabular}
      % \STATE
      \REPEAT
-       \STATE $\beta^{(k)} = \prox_{\mu \lambda f_2} ( Z^{(k)} + \mu X^{*} (y - X Z^{(k)} )) $\\
+       \STATE $\beta^{(k)} = \prox_{\mu \lambda f_2} ( Z^{(k)} + K_y^{*} \|1 - K_y Z^{(k)} \|_+) $\\
       $ \tau^{(k+1)} = \frac{1 + \sqrt{1 + 4 \tau^{k^2}}}{2} $\\
       $ Z^{(k+1)} = \beta^{(k)} + \frac{\tau^{(k)} - 1}{\tau^{(k+1)}} ( \beta^{(k)} - \beta^{(k - 1)}) $\\
-       with $\lambda < \frac{2}{\|K K^T\|_2}$ (Lipschitz constant)
        \UNTIL{convergence}
      \end{algorithmic}
    \end{algorithm}
 
 The result is the p-vector :math:`Z^{(k+1)}`, corresponding to the coefficients vector associated to each sample.
+
+Note : 

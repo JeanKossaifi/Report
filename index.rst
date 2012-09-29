@@ -7,7 +7,7 @@ Internship report
    :maxdepth: 6
 
    introduction
-   Setting/main
+   Motivation/main
    MIKL/main
    Implementation/main
    Tests/main

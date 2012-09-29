@@ -25,17 +25,48 @@ If r = 2:
 
 We will mainly consider r=2. In the remaining of this report, when r is not specified, it is assumed to be equal to 2.
 
-Parsimony
----------
-It can be noted that, whereas the norm 2 selects all the parameters, the norm 1 induces a parsimony, meaning that it will only select some parameters, the other's coefficients being zero.
+Sparsity
+--------
+
+Sparsity
+   A solution is said to be sparse is one or more of its coefficients are zeroed.
+
+It can be noted that, whereas the norm 2 selects all the parameters, the norm 1 induces a sparsity, meaning that it will only select some parameters, the other's coefficients being zero.
+
+More generally, every norm :math:`p` with :math:`p \le 1` induces a sparse structure. However, a norm :math:`p` is convex only if :math:`p \ge 1:math:`p`. Therefore, the only sparse norm considered will be for :math:`p=1`.
+
+Some mixed norm
+---------------
+
+:math:`l_p` norms
++++++++++++++++++
+
+Let :math:`\boldsymbol{X}=(x_1,\cdots,x_n)^T` be a vector and :math:`p \in \mathbb{N}, p \ge 1`, the associated norm :math:`l_p` is defined by:
+
+.. math::
+
+     \textrm{For } 1 \leq p<\infty, \quad & \|\boldsymbol{X}\|_p =  \left( \sum_{i=1}^n |x_i|^p \right)^{\frac{1}{p}} \\
+     \textrm{For } p=\infty, \quad & \|\boldsymbol{X}\|_{\infty}=  \max \left( |x_1|, \cdots,|x_n| \right).
+
+:math:`l_1` norm
+++++++++++++++++
+
+As previously said, the :math:`l_1` norm induces a sparse structure, meaning that it zeroes some of the coefficients.
+
+:math:`l_2` norm
+++++++++++++++++
+
+The mixed norm :math:`l_2` equivalent to the simple norm :math:`l_2`.
 
 Group lasso
------------
-The :math:`l_{21}` (p=2, q=1, r=2)  norm is also known as group lasso, as, due to its parsimony it selects only certain kernels.
++++++++++++
 
-p=1 q=2 r=2
------------
-The :math:`l_{12}` norm selects some elements only for each kernel. Thus, its parsimony is on the elements, not on the kernels.
+The :math:`l_{12}` (p=1, q=2, r=2)  norm is also known as group lasso, as, due to its parsimony it selects only certain kernels.
+
+Elitist lasso
+++++++++++++++
+
+The :math:`l_{21}` (p=2, q=1, r=2) norm selects some elements only for each kernel. Thus, its parsimony is on the elements of each kernel, not on the kernels themselves.
 
 Use of mixed norm in our problem
 --------------------------------

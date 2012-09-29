@@ -4,7 +4,7 @@ Improving prox p=2, q=1
 First implementation
 --------------------
 
-The fist implementation consisted of creating a new numpy array of the correct shape and then filling it with the corresponding values :
+The first implementation consisted of creating a new numpy array of the correct shape and then filling it with the corresponding values :
 
 .. code::
 
@@ -67,7 +67,7 @@ Results
 
 The results are summarised in the following tables.
 
-For the fist implementation :
+For the first implementation :
 *****************************
 
 =======  ==========  =========  ==============
@@ -102,7 +102,7 @@ To monitor it we use an IPython *magic*, %timeit, that indicates the execution t
 
 >>> u = np.arange(5000*10)
 
-For the fist implementation
+For the first implementation
 +++++++++++++++++++++++++++
 
 >>> %timeit test_prox_l21(u, 0.5, 5000, 10)
@@ -117,8 +117,8 @@ For the second implementation
 
 Conclusion
 ----------
-The fist method is slightly faster than the second, whereas using about the same amount of memory.
-Therefore we chose the fist method
+The first method is slightly faster than the second, whereas using about the same amount of memory.
+Therefore we chose the first method
 
 Another improvement
 --------------------

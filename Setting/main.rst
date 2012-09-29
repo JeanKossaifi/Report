@@ -1,6 +1,0 @@
-Setting
-=======
-
-.. toctree::
-   
-   setting
