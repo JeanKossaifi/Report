@@ -13,6 +13,7 @@ Internship report
    Tests/main
    Results/main
    Documentation/main
+   Bibliography/main
 
 
 

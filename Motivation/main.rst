@@ -50,3 +50,15 @@ control of cell. organization        192
 transport facilitation               306
 others                               81
 =================================   ==================
+
+We considered two cases : 
+
+All the data
+++++++++++++
+First all the data where used to predict.
+
+More specific analyses
+++++++++++++++++++++++
+Second, we focused on a smaller amount of information.
+
+For that purpose we considered only the first 100 elements that belongs *only* to class 5 and the first 100 elements that belongs *only* to class 7. Eventually we obtained 200*200 kernels, and a vector of the 200 associated labels.

@@ -34,6 +34,13 @@ Then the dual gap is defined as :
 
    \eta^{(k)} = F_p(X^{(k)}) - F_d(Y^{(k)}) \ge 0
 
+When optimality is reached, the duality gap is equal to zero.
+
+Thus, a good convergence criterion is :
+
+.. math::
+   
+   F_p(X^{(k)}) - F_d(Y^{(k)}) < \epsilon
 
 Dual problem
 ++++++++++++
@@ -106,3 +113,4 @@ Dual variable
 +++++++++++++
 
 For a variable :math:`\alpha`, the dual variable associated is :math:`Y = \|y - K\alpha\|_+ = \|1 - K_y \alpha\|_+`
+

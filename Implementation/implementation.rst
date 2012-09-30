@@ -1,6 +1,52 @@
 Implementation
 ==============
 
+FISTA
+-----
+
+Big picture
++++++++++++
+
+Fista was implemented as a class.
+This has 3 main methods, namely fit, predict and score.
+
+As indicated by its name, fit *fits* the data, ie have the algorithm learn from the data. 
+
+Predict computes the output for the given data using the coefficients computed while fitting the data.
+
+Finally, score computes the score of the predicted output, the score being the percentage of good classification.
+
+All the parameters of the __init__ method are optional, meaning that it is possible to instantiate an object without any argument.
+
+In addition, several convenient features have been implemented.
+
+Generic class
++++++++++++++
+
+The class can be used either with a squared hinge loss (by default) or with a least square.
+
+For the latter, the score and some additional features have not been implanted yet for the latter, however.
+
+The main difference between the two losses is the step determining where to apply the gradient descent.
+This is store as a function, chosen at the beginning of the algorithm, depending on the loss.
+
+Computation of the Lipschitz constant
++++++++++++++++++++++++++++++++++++++
+
+Computing the Lipschitz constant can be time and memory consuming for big data. Therefore, the user is provided with the opportunity to pass it as an argument of the fit method, to recompute it every time, or, finally, to save it.
+
+In this last case, the sha1 hash of the data is computed, and used to identify this uniquely. This allows computing the corresponding Lipschitz constant and storing it, in a convenient way, along with the hash.
+
+Thus, each time new data are fitted, their hash is computed and compared to the existing ones. Eventually, if the Lipschitz constant have already been computed, it is directly loaded. In the other case, the calculus is done and the result store like previously described.
+
+Info
+++++
+
+The `info` method can only be used after the instance has been fitter and is only here for test purpose. It returns a Bunch of useful information.
+
+A Bunch is a dictionary that exposes its methods as attributes.
+This is far more convenient when seeking for information.
+
 Prox for the l122 norm (p=1, q=2 and r=2)
 -----------------------------------------
 
@@ -194,48 +240,13 @@ Again, the dual mixed normed are computed in an easy way by applying the mathema
 
 For example, computing the dual mixed norm l11 of v is computing its infinite norm.
 
-FISTA
------
+Cross-validation
+----------------
 
-Big picture
-+++++++++++
+Both the cross validation and the double cross-validation use parallel computing.
 
-Fista was implemented as a class.
-This has 3 main methods, namely fit, predict and score.
+Thus, the results on the different folds are computed at the same time on different CPUs.
 
-As indicated by its name, fit *fits* the data, ie have the algorithm learn from the data. 
+For that purpose, we used the `Joblib` library.
 
-Predict computes the output for the given data using the coefficients computed while fitting the data.
-
-Finally, score computes the score of the predicted output, the score being the percentage of good classification.
-
-All the parameters of the __init__ method are optional, meaning that it is possible to instantiate an object without any argument.
-
-In addition, several convenient features have been implemented.
-
-Generic class
-+++++++++++++
-
-The class can be used either with a squared hinge loss (by default) or with a least square.
-
-For the latter, the score and some additional features have not been implanted yet for the latter, however.
-
-The main difference between the two losses is the step determining where to apply the gradient descent.
-This is store as a function, chosen at the beginning of the algorithm, depending on the loss.
-
-Computation of the Lipschitz constant
-+++++++++++++++++++++++++++++++++++++
-
-Computing the Lipschitz constant can be time and memory consuming for big data. Therefore, the user is provided with the opportunity to pass it as an argument of the fit method, to recompute it every time, or, finally, to save it.
-
-In this last case, the sha1 hash of the data is computed, and used to identify this uniquely. This allows computing the corresponding Lipschitz constant and storing it, in a convenient way, along with the hash.
-
-Thus, each time new data are fitted, their hash is computed and compared to the existing ones. Eventually, if the Lipschitz constant have already been computed, it is directly loaded. In the other case, the calculus is done and the result store like previously described.
-
-Info
-++++
-
-The `info` method can only be used after the instance has been fitter and is only here for test purpose. It returns a Bunch of useful information.
-
-A Bunch is a dictionary that exposes its methods as attributes.
-This is far more convenient when seeking for information.
+Last, all the information returned are packed in a Bunch which is a dictionary that exposes its elements as attributes.
