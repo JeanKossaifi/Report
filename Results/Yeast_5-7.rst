@@ -1,134 +1,83 @@
 Experiment of Yeast_SW_5-7
 ==========================
 
-Loading data
-------------
-
-In[29]:
-
-.. code:: python
-
-    from datasets import fetch_Yeast_5_7
-    lambdas = [10**i for i in xrange(-3, 6, 1)]
-    data = fetch_Yeast_5_7()
-    Ksw = data.kernel_matrix_sw_cn_3588
-    y = data.y
-    
-    from cross_val import lambda_choice
-    from cross_val import double_cross_val
-    from fista import Fista
-    import numpy as np
-
-L2
---
+:math:`l_2` norm
+----------------
 
 Reducing lambda range
-`````````````````````
++++++++++++++++++++++
 
-In[31]:
+We first reduced the range of possible lambdas by fitting FISTA with many different possible values. 
 
 .. code:: python
 
     infos = lambda_choice('l22', lambdas, 4, Ksw, y, n_iter=10000, n_jobs=4)
 
-In[32]:
+Result 
+******
 
-.. code:: python
-
-    for i in infos:
-        print "Lambda = %f, dual gap = %f, auc_score = %f, score = %f" % (i['lambda_'], i['gap'], i['auc_score'], i['score'])
-
-.. parsed-literal::
-
-    Lambda = 0.001000, dual gap = 0.062820, auc_score = 1.000000, score = 100.000000
-    Lambda = 0.010000, dual gap = 0.615903, auc_score = 1.000000, score = 100.000000
-    Lambda = 0.100000, dual gap = 5.091619, auc_score = 1.000000, score = 100.000000
-    Lambda = 1.000000, dual gap = 10.217634, auc_score = 1.000000, score = 100.000000
-    Lambda = 10.000000, dual gap = 56.041059, auc_score = 0.980000, score = 98.000000
-    Lambda = 100.000000, dual gap = 132.912672, auc_score = 0.950000, score = 95.000000
-    Lambda = 1000.000000, dual gap = 149.936520, auc_score = 0.945000, score = 94.500000
-    Lambda = 10000.000000, dual gap = 151.853605, auc_score = 0.945000, score = 94.500000
-    Lambda = 100000.000000, dual gap = 152.047744, auc_score = 0.945000, score = 94.500000
+======================= ======================  ===================== ====================
+Lambda                  Dual gap                aux score             classification score
+======================= ======================  ===================== ====================
+Lambda = 0.001000       dual gap = 0.062820     auc_score = 1.000000  score = 100.000000
+Lambda = 0.010000       dual gap = 0.615903     auc_score = 1.000000  score = 100.000000
+Lambda = 0.100000       dual gap = 5.091619     auc_score = 1.000000  score = 100.000000
+Lambda = 1.000000       dual gap = 10.217634    auc_score = 1.000000  score = 100.000000
+Lambda = 10.000000      dual gap = 56.041059    auc_score = 0.980000  score = 98.000000
+Lambda = 100.000000     dual gap = 132.912672   auc_score = 0.950000  score = 95.000000
+Lambda = 1000.000000    dual gap = 149.936520   auc_score = 0.945000  score = 94.500000
+Lambda = 10000.000000   dual gap = 151.853605   auc_score = 0.945000  score = 94.500000
+Lambda = 100000.000000  dual gap = 152.047744   auc_score = 0.945000  score = 94.500000
+======================= ======================  ===================== ====================
 
 
 More precise range
-``````````````````
+++++++++++++++++++
 
-In[33]:
+Based on this first experiment we chose a more precise range.
 
 .. code:: python
 
     lambdas = [1, 2, 3, 4, 5, 6, 7, 8, 8.5, 9, 9.5, 10]
 
-In[34]:
 
-.. code:: python
+Result
+******
 
-    infos = lambda_choice('l22', lambdas, 4, Ksw, y, n_iter=100000, n_jobs=4)
+=================== ===================== =============== ====================
+Lambda                  Dual gap              aux score   classification score
+=================== ===================== =============== ====================
+Lambda = 1.000000   dual gap = 10.217634  auc = 1.000000  score = 100.000000
+Lambda = 2.000000   dual gap = 0.000001   auc = 1.000000  score = 100.000000
+Lambda = 3.000000   dual gap = 10.401112  auc = 1.000000  score = 100.000000
+Lambda = 4.000000   dual gap = 19.591883  auc = 1.000000  score = 100.000000
+Lambda = 5.000000   dual gap = 27.599890  auc = 1.000000  score = 100.000000
+Lambda = 6.000000   dual gap = 34.610895  auc = 0.995000  score = 99.500000
+Lambda = 7.000000   dual gap = 40.825269  auc = 0.990000  score = 99.000000
+Lambda = 8.000000   dual gap = 46.427253  auc = 0.985000  score = 98.500000
+Lambda = 8.500000   dual gap = 49.013493  auc = 0.985000  score = 98.500000
+Lambda = 9.000000   dual gap = 51.471548  auc = 0.980000  score = 98.000000
+Lambda = 9.500000   dual gap = 53.811158  auc = 0.980000  score = 98.000000
+Lambda = 10.000000  dual gap = 56.041059  auc = 0.980000  score = 98.000000
+=================== ===================== =============== ====================
 
-In[36]:
-
-.. code:: python
-
-    for i in infos:
-        print "Lambda = %f, dual gap = %f, auc = %f, score = %f" % (i['lambda_'], i['gap'], i['auc_score'], i['score'])
-
-.. parsed-literal::
-
-    Lambda = 1.000000, dual gap = 10.217634, auc = 1.000000, score = 100.000000
-    Lambda = 2.000000, dual gap = 0.000001, auc = 1.000000, score = 100.000000
-    Lambda = 3.000000, dual gap = 10.401112, auc = 1.000000, score = 100.000000
-    Lambda = 4.000000, dual gap = 19.591883, auc = 1.000000, score = 100.000000
-    Lambda = 5.000000, dual gap = 27.599890, auc = 1.000000, score = 100.000000
-    Lambda = 6.000000, dual gap = 34.610895, auc = 0.995000, score = 99.500000
-    Lambda = 7.000000, dual gap = 40.825269, auc = 0.990000, score = 99.000000
-    Lambda = 8.000000, dual gap = 46.427253, auc = 0.985000, score = 98.500000
-    Lambda = 8.500000, dual gap = 49.013493, auc = 0.985000, score = 98.500000
-    Lambda = 9.000000, dual gap = 51.471548, auc = 0.980000, score = 98.000000
-    Lambda = 9.500000, dual gap = 53.811158, auc = 0.980000, score = 98.000000
-    Lambda = 10.000000, dual gap = 56.041059, auc = 0.980000, score = 98.000000
-
+Thus we chose the higher lambda raising the maximal score: we take :math:`\lambda = 5`.
 
 Cross-validation
-````````````````
+++++++++++++++++
 
-In[50]:
-
-.. code:: python
-
-    res_SW_l2 = cross_val('l22', 5, 10, Ksw, y, n_iter=500000)
-
-.. parsed-literal::
-
-    [Parallel(n_jobs=1)]: Done   1 jobs       | elapsed:  2.2min
-    [Parallel(n_jobs=1)]: Done  10 out of  10 | elapsed: 22.9min finished
+We use cross-validation to estimate the performance of our algorithm.
 
 
-.. parsed-literal::
-
-    ** Computing scores ...
-
-
-In[51]:
-
-.. code:: python
-
-    print "mean score : %f, score std : %f, mean auc : %f" % (res_SW_l1.mean_score, res_SW_l1.std_score, res_SW_l1.auc_mean_score)
+Result
+******
 
 .. parsed-literal::
 
     mean score : 84.000000, score std : 5.830952, mean auc : 0.840000
 
-
-In[52]:
-
-.. code:: python
-
-    for i, e in enumerate(res_SW_l1.infos):
-        print "***** FOLD %d  *********\n" % (i+1) 
-        for j in e:
-            print j, " : ", e[j]
-        print "\n\n"
+Detailed results by fold
+************************
 
 .. parsed-literal::
 
@@ -284,133 +233,65 @@ In[52]:
     
 
 
-L1
---
+:math:`l_1` norm
+----------------
 
 Reducing lambda range
-`````````````````````
++++++++++++++++++++++
 
-In[2]:
+We used the same protocol here
 
-.. code:: python
-
-    infos = lambda_choice('l11', lambdas, 4, Ksw, y, n_iter=10000, n_jobs=6)
-
-In[3]:
-
-.. code:: python
-
-    for i in infos:
-        print "Lambda = %f, dual gap = %f, auc_score = %f, score = %f" % (i['lambda_'], i['gap'], i['auc_score'], i['score'])
-
-.. parsed-literal::
-
-    Lambda = 0.001000, dual gap = 0.133421, auc_score = 1.000000, score = 100.000000
-    Lambda = 0.010000, dual gap = 1.328398, auc_score = 1.000000, score = 100.000000
-    Lambda = 0.100000, dual gap = 12.715437, auc_score = 1.000000, score = 100.000000
-    Lambda = 1.000000, dual gap = 72.643917, auc_score = 0.945000, score = 94.500000
-    Lambda = 10.000000, dual gap = 35.347653, auc_score = 0.500000, score = 50.000000
-    Lambda = 100.000000, dual gap = 0.000000, auc_score = 0.500000, score = 50.000000
-    Lambda = 1000.000000, dual gap = 0.000000, auc_score = 0.500000, score = 50.000000
-    Lambda = 10000.000000, dual gap = 0.000000, auc_score = 0.500000, score = 50.000000
-    Lambda = 100000.000000, dual gap = 0.000000, auc_score = 0.500000, score = 50.000000
+======================= ===================== ===================== ====================
+Lambda                  Dual gap              auc score             classification score
+======================= ===================== ===================== ====================
+Lambda = 0.001000       dual gap = 0.133421   auc_score = 1.000000  score = 100.000000
+Lambda = 0.010000       dual gap = 1.328398   auc_score = 1.000000  score = 100.000000
+Lambda = 0.100000       dual gap = 12.715437  auc_score = 1.000000  score = 100.000000
+Lambda = 1.000000       dual gap = 72.643917  auc_score = 0.945000  score = 94.500000
+Lambda = 10.000000      dual gap = 35.347653  auc_score = 0.500000  score = 50.000000
+Lambda = 100.000000     dual gap = 0.000000   auc_score = 0.500000  score = 50.000000
+Lambda = 1000.000000    dual gap = 0.000000   auc_score = 0.500000  score = 50.000000
+Lambda = 10000.000000   dual gap = 0.000000   auc_score = 0.500000  score = 50.000000
+Lambda = 100000.000000  dual gap = 0.000000   auc_score = 0.500000  score = 50.000000
+======================= ===================== ===================== ====================
 
 
-More precise range
-``````````````````
-
-In[3]:
+Double-cross-validation
++++++++++++++++++++++++
 
 .. code:: python
 
     lambdas = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3]
 
-In[101]:
-
-.. code:: python
-
-    infos = lambda_choice('l11', lambdas, 4, Ksw, y, n_iter=100000, n_jobs=7)
-
-In[102]:
-
-.. code:: python
-
-    for i in infos:
-        print "Lambda = %f, dual gap = %f, auc = %f, score = %f" % (i['lambda_'], i['gap'], i['auc'], i['score'])
-
-Double-cross-validation
-```````````````````````
-
-In[4]:
+We use double cross validation with 100,000 iterations
 
 .. code:: python
 
     result = double_cross_val('l11', lambdas, 4, 4, Ksw, y, n_iter=100000)
 
-.. parsed-literal::
-
-    ** Computing scores ...
-
-
-.. parsed-literal::
-
-    [Parallel(n_jobs=-1)]: Done   3 out of   4 | elapsed: 27.3min remaining:  9.1min
-    [Parallel(n_jobs=-1)]: Done   2 out of   4 | elapsed: 27.5min remaining: 27.5min
-
-
-.. parsed-literal::
-
-    [Parallel(n_jobs=-1)]: Done   1 out of   4 | elapsed: 27.6min remaining: 82.7min
-    [Parallel(n_jobs=-1)]: Done   4 out of   4 | elapsed: 27.7min finished
-
-
-In[5]:
-
-.. code:: python
-
-    result
-
-Out[5]:
-
-.. parsed-literal::
-
-    [{'best lambda': 0.1, 'ext score': 80.0, 'int score': 83.5},
-     {'best lambda': 0.1, 'ext score': 80.0, 'int score': 83.5},
-     {'best lambda': 0.1, 'ext score': 80.0, 'int score': 83.5},
-     {'best lambda': 0.1, 'ext score': 80.0, 'int score': 83.5}]
+Results by external cross validation
+************************************
+================================ =========== ============== ===================
+External cross validation number Best lambda external score internal mean score
+================================ =========== ============== ===================
+1                                0.1         80.0           83.5
+1                                0.1         80.0           83.5
+1                                0.1         80.0           83.5
+1                                0.1         80.0           83.5
+================================ =========== ============== ===================
 
 Cross-validation
-````````````````
+++++++++++++++++
 
-In[25]:
-
-.. code:: python
-
-    res_SW_l1 = cross_val('l11', 0.1, 10, Ksw, y, n_iter=500000)
-
-.. parsed-literal::
-
-    [Parallel(n_jobs=1)]: Done   1 jobs       | elapsed:  2.2min
-    [Parallel(n_jobs=1)]: Done  10 out of  10 | elapsed: 22.6min finished
-
-
-.. parsed-literal::
-
-    ** Computing scores ...
-
-
-In[26]:
-
-.. code:: python
-
-    print "mean score : %f, score std : %f, mean auc : %f" % (res_SW_l1.mean_score, res_SW_l1.std_score, res_SW_l1.auc_mean_score)
-
+Result
+******
 .. parsed-literal::
 
     mean score : 84.000000, score std : 5.830952, mean auc : 0.840000
 
 
-In[28]:
+Detailed results by fold
+************************
 
 .. code:: python
 
@@ -577,95 +458,41 @@ In[28]:
 Yeast all kernels
 =================
 
-In[5]:
-
-.. code:: python
-
-    from datasets import fetch_Yeast_5_7
-    lambdas = [10**i for i in xrange(-3, 6, 1)]
-    data = fetch_Yeast_5_7()
-    K = data.K
-    y = data.y
-    lambdas = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3]
-    
-    from cross_val import lambda_choice
-    from cross_val import double_cross_val
-    from cross_val import cross_val
-    from fista import Fista
-    import numpy as np
-
-l21 penalty
------------
+:math:`l_{21}` penalty
+---------------------
 
 Reducing lambda range
-`````````````````````
-
-In[7]:
-
-.. code:: python
-
-    infos_l21 = lambda_choice('l21', lambdas, 4, K, y, n_iter=500000, n_jobs=3)
-
-In[9]:
-
-.. code:: python
-
-    for i in infos_l21:
-        print "Lambda = %f, dual gap = %f, auc = %f, score = %f" % (i['lambda_'], i['gap'], i['auc_score'], i['score'])
++++++++++++++++++++++
 
 .. parsed-literal::
 
-    Lambda = 0.001000, dual gap = 0.004605, auc = 1.000000, score = 100.000000
-    Lambda = 0.010000, dual gap = 0.046025, auc = 1.000000, score = 100.000000
-    Lambda = 0.100000, dual gap = 0.457173, auc = 1.000000, score = 100.000000
-    Lambda = 1.000000, dual gap = 4.271293, auc = 1.000000, score = 100.000000
-    Lambda = 10.000000, dual gap = 22.613612, auc = 0.970000, score = 97.000000
-    Lambda = 100.000000, dual gap = 22.252123, auc = 0.630000, score = 63.000000
-    Lambda = 1000.000000, dual gap = 0.000000, auc = 0.500000, score = 50.000000
-    Lambda = 10000.000000, dual gap = 0.000000, auc = 0.500000, score = 50.000000
-    Lambda = 100000.000000, dual gap = 0.000000, auc = 0.500000, score = 50.000000
+======================= ===================== =============== ====================
+Lambda                  Dual gap              auc score       classification score
+======================= ===================== =============== ====================
+Lambda = 0.001000       dual gap = 0.004605   auc = 1.000000  score = 100.000000
+Lambda = 0.010000       dual gap = 0.046025   auc = 1.000000  score = 100.000000
+Lambda = 0.100000       dual gap = 0.457173   auc = 1.000000  score = 100.000000
+Lambda = 1.000000       dual gap = 4.271293   auc = 1.000000  score = 100.000000
+Lambda = 10.000000      dual gap = 22.613612  auc = 0.970000  score = 97.000000
+Lambda = 100.000000     dual gap = 22.252123  auc = 0.630000  score = 63.000000
+Lambda = 1000.000000    dual gap = 0.000000   auc = 0.500000  score = 50.000000
+Lambda = 10000.000000   dual gap = 0.000000   auc = 0.500000  score = 50.000000
+Lambda = 100000.000000  dual gap = 0.000000   auc = 0.500000  score = 50.000000
+======================= ===================== =============== ====================
 
 
 Cross validation
-----------------
+++++++++++++++++
 
-In[6]:
-
-.. code:: python
-
-    res21 = cross_val('l21', 1, 10, K, y, n_iter=500000)
-
-.. parsed-literal::
-
-    [Parallel(n_jobs=1)]: Done   1 jobs       | elapsed: 10.0min
-    [Parallel(n_jobs=1)]: Done  10 out of  10 | elapsed: 99.5min finished
-
-
-.. parsed-literal::
-
-    ** Computing scores ...
-
-
-In[10]:
-
-.. code:: python
-
-    print "mean score : %f, score std : %f, mean auc : %f" % (res21.mean_score, res21.std_score, res21.auc_mean_score)
+Results
+*******
 
 .. parsed-literal::
 
     mean score : 91.000000, score std : 6.244998, mean auc : 0.910000
 
-
-In[24]:
-
-.. code:: python
-
-    for i, e in enumerate(res21.infos):
-        print "***** FOLD %d  *********\n" % (i+1) 
-        for j in e:
-            print j, " : ", e[j]
-        print "\n\n"
+Detailed results by fold
+************************
 
 .. parsed-literal::
 
@@ -821,79 +648,40 @@ In[24]:
     
 
 
-l12 penalty
------------
+:math:`l_{12}` penalty
+----------------------
 
-In[4]:
-
-.. code:: python
-
-    infos_l12 = lambda_choice('l12', lambdas, 4, K, y, n_iter=500000, n_jobs=3)
-
-In[6]:
-
-.. code:: python
-
-    for i in infos_l12:
-        print "Lambda = %f, dual gap = %f, auc = %f, score = %f" % (i['lambda_'], i['gap'], i['auc_score'], i['score'])
-
-.. parsed-literal::
-
-    Lambda = 0.100000, dual gap = 17.734493, auc = 1.000000, score = 100.000000
-    Lambda = 0.200000, dual gap = 47.085330, auc = 1.000000, score = 100.000000
-    Lambda = 0.300000, dual gap = 85.135761, auc = 1.000000, score = 100.000000
-    Lambda = 0.400000, dual gap = 130.122003, auc = 0.970000, score = 97.000000
-    Lambda = 0.500000, dual gap = 189.450062, auc = 0.945000, score = 94.500000
-    Lambda = 0.600000, dual gap = 213.578780, auc = 0.935000, score = 93.500000
-    Lambda = 0.700000, dual gap = 295.887021, auc = 0.915000, score = 91.500000
-    Lambda = 0.800000, dual gap = 350.908773, auc = 0.905000, score = 90.500000
-    Lambda = 0.900000, dual gap = 412.421888, auc = 0.890000, score = 89.000000
-    Lambda = 1.000000, dual gap = 480.042919, auc = 0.885000, score = 88.500000
-    Lambda = 1.100000, dual gap = 557.725337, auc = 0.885000, score = 88.500000
-    Lambda = 1.200000, dual gap = 1333.846705, auc = 0.855000, score = 85.500000
-    Lambda = 1.300000, dual gap = 1390.406934, auc = 0.845000, score = 84.500000
+================== ======================= =============== ====================
+Lambda             Duality gap             auc score       classification score
+================== ======================= =============== ====================
+Lambda = 0.100000  dual gap = 17.734493    auc = 1.000000  score = 100.000000
+Lambda = 0.200000  dual gap = 47.085330    auc = 1.000000  score = 100.000000
+Lambda = 0.300000  dual gap = 85.135761    auc = 1.000000  score = 100.000000
+Lambda = 0.400000  dual gap = 130.122003   auc = 0.970000  score = 97.000000
+Lambda = 0.500000  dual gap = 189.450062   auc = 0.945000  score = 94.500000
+Lambda = 0.600000  dual gap = 213.578780   auc = 0.935000  score = 93.500000
+Lambda = 0.700000  dual gap = 295.887021   auc = 0.915000  score = 91.500000
+Lambda = 0.800000  dual gap = 350.908773   auc = 0.905000  score = 90.500000
+Lambda = 0.900000  dual gap = 412.421888   auc = 0.890000  score = 89.000000
+Lambda = 1.000000  dual gap = 480.042919   auc = 0.885000  score = 88.500000
+Lambda = 1.100000  dual gap = 557.725337   auc = 0.885000  score = 88.500000
+Lambda = 1.200000  dual gap = 1333.846705  auc = 0.855000  score = 85.500000
+Lambda = 1.300000  dual gap = 1390.406934  auc = 0.845000  score = 84.500000
+================== ======================= =============== ====================
 
 
 Cross-validation
 ----------------
 
-In[7]:
-
-.. code:: python
-
-    res12 = cross_val('l12', 0.3, 10, K, y, n_iter=500000)
-
-.. parsed-literal::
-
-    [Parallel(n_jobs=1)]: Done   1 jobs       | elapsed: 15.0min
-    [Parallel(n_jobs=1)]: Done  10 out of  10 | elapsed: 149.3min finished
-
-
-.. parsed-literal::
-
-    ** Computing scores ...
-
-
-In[11]:
-
-.. code:: python
-
-    print "mean score : %f, score std : %f, mean auc : %f" % (res21.mean_score, res21.std_score, res21.auc_mean_score)
+Results
+*******
 
 .. parsed-literal::
 
     mean score : 91.000000, score std : 6.244998, mean auc : 0.910000
 
-
-In[23]:
-
-.. code:: python
-
-    for i, e in enumerate(res12.infos):
-        print "***** FOLD %d  *********\n" % (i+1)
-        for j in e:
-            print j, " : ", e[j]
-        print "\n\n"
+Detailed results by fold
+************************
 
 .. parsed-literal::
 
@@ -1044,8 +832,3 @@ In[23]:
     nulled_coefs  :  995
     auc_score  :  0.75
     dual_objective_function  :  -36.1969852815
-    
-    
-    
-
-
