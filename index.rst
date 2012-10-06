@@ -14,12 +14,3 @@ Internship report
    Results/main
    Documentation/main
    Bibliography/main
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
