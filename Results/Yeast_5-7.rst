@@ -832,3 +832,8 @@ Detailed results by fold
     nulled_coefs  :  995
     auc_score  :  0.75
     dual_objective_function  :  -36.1969852815
+
+Conclusion
+-----------
+
+Here, not only did we get a very hight good classification rate (>90%), we also confirmed that mixed norms were more adapted when prior knowledge is available. Thus, while we only have a score of 84 % with norms :math:`l_1` and :math:`l_2`, this increases to 91% when using :math:`l_{12}` and :math:`l_{21}` norms.

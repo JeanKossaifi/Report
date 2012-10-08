@@ -14,3 +14,4 @@ Internship report
    Results/main
    Documentation/main
    Bibliography/main
+   conclusion
