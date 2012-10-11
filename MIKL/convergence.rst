@@ -26,6 +26,12 @@ Eventually, the best solution is to consider the dual gap.
 Dual gap
 --------
 
+Considering the original (Primal problem) : 
+
+.. math::
+
+  F_p = \left|1-K_y \bfalpha\right|_+^2+f_2(\alpha)
+
 We have to introduce the dual problem :math:`F_d`, and, to a variable :math:`X^{(k)}` we have to associate a dual variable :math:`Y^{(k)}`
 
 Then the dual gap is defined as :
@@ -58,7 +64,7 @@ The dual problem is the following :
 .. math::
    :label: dual_objective_function
 
-   \max_{Y} -\frac{1}{2} \|Y\|_2^2 + Tr(Y^T M) - f_2^* (G^* Y)
+   \max_{Y} -\frac{1}{2} \|Y\|_2^2 + Tr(Y^T M) - f_2^* (K^* Y)
 
 where :math:`f_2^*` is the Fenchel conjugate of :math:`\frac{\lambda}{q} f_2` and Y is the dual variable, :math:`Y = y - K \alpha`.
 
@@ -106,7 +112,7 @@ The dual norm of :math:`\|.\|_{p,q}` is the norm
 .. math::
    
    \|.\|_{p',q'} \text{ such as } : & \text{ if } p>1, \frac{1}{p} + \frac{1}{p} \text{ ( same for q)}\\
-                                    & \text{ if } p=1, p'=+\infty \text{( same for q)}
+                                    & \text{ if } p=1, p'=+\infty \text{ (same for q)}
 
 
 Dual variable

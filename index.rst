@@ -13,5 +13,5 @@ Internship report
    Tests/main
    Results/main
    Documentation/main
-   Bibliography/main
    conclusion
+   Bibliography/main

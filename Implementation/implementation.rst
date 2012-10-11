@@ -44,8 +44,8 @@ The `info` method can only be used after the instance has been fitter and is onl
 A Bunch is a dictionary that exposes its methods as attributes.
 This is far more convenient when seeking for information.
 
-Prox for the l122 norm (p=1, q=2 and r=2)
-=========================================
+Prox for the l122 norm (p=1, q=2)
+=================================
 
 
 The proximity operator for this norm is 
@@ -241,6 +241,9 @@ Cross-validation
 ================
 
 Both the cross validation and the double cross-validation use parallel computing.
+
+Cross-validation
+   is a method that enables us to estimate the generalisation error by splitting the dataset into training set and testing set.
 
 Thus, the results on the different folds are computed at the same time on different CPUs.
 

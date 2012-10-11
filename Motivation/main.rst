@@ -1,31 +1,17 @@
 Motivation
 ==========
 
-Supervised binary classification
---------------------------------
 
-The main goal of this project is to perform supervised binary classification. This means that we have in hand a set of examples we want to classify into two different classes.
+The main goal of this is to work with a set of information from different sources and to highlight the most significant ones for a given problem.
+
+For this purpose, we will use supervised binary classification. This means that we have in hand a set of examples we want to classify into two different classes.
 
 For this purpose, we use a set of examples for which we already know the corresponding class. The objective is to use an algorithm to understand the underlying logic in the data in order to be able to generalise this knowledge to classify new examples into the correct class.
 
-Multiple kernel learning
-------------------------
 
-To make it simple, we want to combine the information from different sources in the best possible way.
+To make it simple, we want to combine the information from different sources in the best possible way, by using Multiple Kernel Learning. Each kernel (we will introduce this notion later) represent one source of information. It is basically represented by a squared matrix.
 
-Each kernel (we will introduce this notion later) represent one source of information. It is basically represented by a squared matrix.
-
-Prior knowledge
----------------
-
-One of the challenges of this project is to integrate prior knowledge on the data.
-
-In other word, we want to take into account an expert knowledge in the way in which we combine the information together.
-
-For example, a prior knowledge can inform us that only part of the information is useful. An important part of the learning algorithm will thus be to discard the non useful ones.
-
-Application in biology
-----------------------
+One of the challenges of this project is to integrate prior knowledge on the data. In other word, we want to take into account an expert knowledge in the way in which we combine the information together. For example, a prior knowledge can inform us that only part of the information is useful. An important part of the learning algorithm will thus be to discard the non useful ones.
 
 Although the techniques developed can be applied in many fields, we will be interested mostly into a biology one.
 
@@ -53,12 +39,8 @@ others                               81
 
 We considered two cases : 
 
-All the data
-++++++++++++
-First all the data where used to predict.
+* First all the data where used to predict.
 
-More specific analyses
-++++++++++++++++++++++
-Second, we focused on a smaller amount of information.
+* Second, we focused on a smaller amount of information.
 
-For that purpose we considered only the first 100 elements that belongs *only* to class 5 and the first 100 elements that belongs *only* to class 7. Eventually we obtained 200*200 kernels, and a vector of the 200 associated labels.
+  For that purpose we considered only the first 100 elements that belongs *only* to class 5 and the first 100 elements that belongs *only* to class 7. Eventually we obtained 200*200 kernels, and a vector of the 200 associated labels.

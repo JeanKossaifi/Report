@@ -1,7 +1,7 @@
 Algorithm used
 ==============
 
-The main idea was to use a well-established and robust algorithm. Standing for Iterative Shrinkage Thresholding Algorithm, ISTA was the first choice.
+The main idea was to use a well-established and robust algorithm. Standing for Iterative Shrinkage Thresholding Algorithm, ISTA was the first choice as it was proved to converge [Fu, 1998 ; Daubechies et coll., 2004].
 
 ISTA
 ----
@@ -22,7 +22,8 @@ Algorithm
      \begin{algorithmic}
        \STATE \begin{tabular}{@{\hspace{0cm}}p{1.1cm}l}
        \textbf{initialize}  & $\bfalpha^{(0)}\in\RR^{n\tau}$ (for
-       instance $\mathbf{0}$) % \vphantom{$\bigg \lfloor$}
+       instance $\mathbf{0}$) \\
+                            & $ K_y $ = diag(y)$K$\\
      \end{tabular}
      % \STATE
      \REPEAT

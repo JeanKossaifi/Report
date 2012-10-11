@@ -25,3 +25,10 @@ The first idea is to consider a linear combination of all the kernels ie
    K(x, x') = \sum_{m} K_m(x, x').
 
 The kernels are usually positive definite.
+
+Definite positive kernel
+   A kernel K (being an :math:`(n*n)` matrix) is said to be positive definite if :
+
+.. math::
+   
+   d^T K d > 0, \forall d \in \RR^n / 0

@@ -14,4 +14,4 @@ Finally, this problems comes to solving the following penalised optimisation pro
 
    \min_{\bfalpha\in\realset^{n\kappa}}\sum_{i=1}^n\left|1-y_i\bfk_i^{\top}\bfalpha\right|_+^2+f_2(\alpha)
 
-Where :math:`f_2` is the regularisation terms which integrates any prior knowledge.
+Where :math:`f_2` is the regularisation term which integrates any prior knowledge, :math:`|x|_+ = max(x, 0)` and :math:`k_i \text{ is the } i^{th} \text{ column of the kernel } K`.

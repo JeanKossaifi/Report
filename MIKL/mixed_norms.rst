@@ -6,24 +6,12 @@ Thus it is possible to define groups of variables using expert knowledge. When t
 
 For this purpose we introduce mixed norms.
 
-The :math:`l_{p,q,r}` norm are defined by :
-
-If r = 1: 
-
-.. math::
-   
-   \|\bfalpha\|_{pq; 1}=\left[\sum_{i=1}^n\left[\sum_{t=1}^{\tau}|\alpha_{it}|^p\right]^{q/p}\right]^{1/q},
-
-If r = 2:
+The :math:`l_{p,q}` norm are defined by :
 
 .. math::
 
    \|\bfalpha\|_{pq;2}=\left[\sum_{t=1}^{\tau}\left[\sum_{i=1}^n|\alpha_{it}|^p\right]^{q/p}\right]^{1/q},
 
-
-(note that the order of summation has changed).
-
-We will mainly consider r=2. In the remaining of this report, when r is not specified, it is assumed to be equal to 2.
 
 Sparsity
 --------
@@ -35,8 +23,8 @@ It can be noted that, whereas the norm 2 selects all the parameters, the norm 1 
 
 More generally, every norm :math:`p` with :math:`p \le 1` induces a sparse structure. However, a norm :math:`p` is convex only if :math:`p \ge 1:math:`p`. Therefore, the only sparse norm considered will be for :math:`p=1`.
 
-Some mixed norm
----------------
+Some norms
+----------
 
 :math:`l_p` norms
 +++++++++++++++++
@@ -62,6 +50,7 @@ Group lasso
 +++++++++++
 
 The :math:`l_{12}` (p=1, q=2, r=2)  norm is also known as group lasso, as, due to its parsimony it selects only certain kernels.
+It was first introduced by Yuan et Lin [2006] in order to select the set of variables associated with relevant groups.
 
 Elitist lasso
 ++++++++++++++
@@ -73,12 +62,12 @@ Use of mixed norm in our problem
 
 In the previous problem, the penalisation :math:`f_2` will be a mixed norm.
 
-In other words, :math:`f_2(\alpha) = \frac{\lambda}{q}\|\bfalpha\|_{pq;r}^q`
+In other words, :math:`f_2(\alpha) = \frac{\lambda}{q}\|\bfalpha\|_{pq}^q`
 
 Thus, the problem becomes :
 
 .. math::
    :label: objective_function
 
-   \min_{\bfalpha\in\realset^{n\kappa}}\sum_{i=1}^n\left|1-y_i\bfk_i^{\top}\bfalpha\right|_+^2+\frac{\lambda}{q}\|\bfalpha\|_{pq;r}^q
+   \min_{\bfalpha\in\realset^{n\kappa}}\sum_{i=1}^n\left|1-y_i\bfk_i^{\top}\bfalpha\right|_+^2+\frac{\lambda}{q}\|\bfalpha\|_{pq}^q
 
