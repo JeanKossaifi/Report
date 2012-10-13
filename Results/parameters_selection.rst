@@ -1,9 +1,40 @@
 Parameter selection
 ===================
 
+Cross validation
+----------------
+
+We mentioned cross-validation to estimate the score, this method is described bellow : 
+
+.. math::
+   :nowrap:
+
+   \begin{algorithm}[H]
+     \caption{\small Cross validation (KFold)}
+     \label{alg:cross_val} 
+     \begin{algorithmic}
+       \STATE \begin{tabular}{@{\hspace{0cm}}p{1.4cm}l}
+       \textbf{Parameters}  & $(K, y)$ : observation matrix and the vector of associated labels.\\
+           & $n_{folds}$ : number of folds \\
+       \end{tabular}
+       \STATE $KFolds \leftarrow \text{ divide K into } n_{folds} \text{ folds}$\\
+     \FOR{i \textbf{from} 1 \TO $n_{folds}$}
+         \STATE $\text{train}[i] \leftarrow 1 \text{ bloc of } KFolds$
+         \STATE $\text{valid}[i] \leftarrow \text{ the other blocks of } KFolds$
+         \STATE $\text{model}$[i] $\leftarrow$ fit-algorithm($\text{train}[i]$)
+         \STATE $\text{error}$[i] $\leftarrow$ compute-error($\text{model}[i]$, $\text{valid}[i]$))
+     \ENDFOR 
+     \STATE $\text{error}_{test} \leftarrow  \text{mean}_i( \text{error}$[i])
+     \RETURN $\text{error}_{test}$ 
+     \end{algorithmic}
+   \end{algorithm}
+
+
 An important aspect of this work is the selection of the best regularisation parameter ( :math:`\lambda` ).
 
-For this purpose we use double cross validation. This consists of evaluating the test error with a learning test, with cross validation. The optimal regularisation hyper-parameters are chosen during this step using cross-validation as well.
+We could compute the score obtained by each parameter using cross-validation, but this would be biased.
+
+Hence the use of another method called double cross validation. This consists of evaluating the test error with a learning test, with cross validation. The optimal regularisation hyper-parameters are chosen during this step using cross-validation as well.
 
 Thus, we evaluate by cross validation :
 
