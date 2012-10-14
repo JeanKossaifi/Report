@@ -58,7 +58,10 @@ As previously said, ISTA is an iterative projected gradient algorithm. Therefore
 
 * :math:`f_2` is a proper convex function (not necessarily differentiable).
 
- However the convergence rate is only in :math:`O(\frac{1}{N})` where :math:`N` is the number of iteration.  
+As previouslty mentionned, we use the hinge loss :math:`f_1(\bfalpha) = \sum_{i=1}^n\left|1-y_i\bfk_i^{\top}\bfalpha\right|_+` and the mixed norm penalty :math:`f_2(\bfalpha)  = \lambda/q \|\bfalpha\|_{pq}^q`, with :math:`p,q \geq   1`, which are both convex lower semicontinuous functions, nondifferentiable when their arguments are :math:`0`. In addition, :math:`\nabla_{\bfalpha} f_2(\bfalpha)` is only :math:`\beta`-Lipschtiz when :math:`p, q \in  \{1, 2\}`. We therefore limit the study of proximity operators to `\ell_1`, :math:`\ell_2`, :math:`\ell_{12}`, :math:`\ell_{21}` norms.
+
+
+However the convergence rate is only in :math:`O(\frac{1}{N})` where :math:`N` is the number of iteration.  
 
 For this reason, we prefer using a another version of ISTA, which is faster, although more complicated. Hence its name, FISTA, standing for Fast ISTA.
 
@@ -95,7 +98,45 @@ Algorithm
 
 The result is the p-vector :math:`Z^{(k+1)}`, corresponding to the coefficients vector associated to each sample.
 
-Proximity operator
-------------------
+Mixed norms
+-----------
 
+For p=q=1
++++++++++
+
+.. math::
+   
+   \hat{\alpha}_{l,m} = \sign(u_{l,m}) \left| |u_{l,m}| - \lambda \right|_+
+
+
+which is also know as the soft-thresholding operator.
+
+For p=2 and q=1
++++++++++++++++
+
+.. math::
+
+   \hat{\alpha}_{l,m} = u_{l,m} \left| 1 - \frac{ \lambda}{ \|u_{l \bullet }\|_{2}} \right|_+
+
+where l is in range(0, n_kernels) and m is in range(0, n_samples) so :math:`u_{l \bullet }` = [u(l, m) for l in n_samples]
+
+This operator is detailed later on in the `Implementation` part.
+
+
+For p=1 and q=2
++++++++++++++++
+
+.. math::
+
+   \hat{\alpha}_{l,m} = sign(u_{l,m})\left||u_{l,m}| - \frac{\lambda \sum\limits_{m_l=1}^{M_l} u2_{l,m_l}}{(1+\lambda M_l) \|u_{l \bullet }\|_{2}} \right|_+
+
+where  :math:`u2_{l,m_l}`  denotes the :math:`|u_{l,m_l}|` ordered  by descending  order for fixed  :math:`l`,  and the quantity :math:`M_l` is the number computed in compute_M
+
+
+For p=q=2
++++++++++
+
+.. math::
+
+   \hat{\alpha}_{l,m} = \frac{1}{1 + \lambda} \, u_{l,m}
 
