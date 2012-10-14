@@ -59,85 +59,6 @@ In[3]:
 
 .. parsed-literal::
 
-    iteration 0 == primal objective : 95.985159, dual objective : 49.478681, dual_gap : 46.506478
-    iteration 1000 == primal objective : 0.445664, dual objective : 1.795117, dual_gap : 1.349453
-
-.. parsed-literal::
-
-    
-    iteration 2000 == primal objective : 0.220601, dual objective : 0.913353, dual_gap : 0.692752
-
-.. parsed-literal::
-
-    
-    iteration 3000 == primal objective : 0.155845, dual objective : 0.614400, dual_gap : 0.458555
-
-.. parsed-literal::
-
-    
-    iteration 4000 == primal objective : 0.123040, dual objective : 0.518957, dual_gap : 0.395916
-
-.. parsed-literal::
-
-    
-    iteration 5000 == primal objective : 0.098027, dual objective : 0.468776, dual_gap : 0.370749
-
-.. parsed-literal::
-
-    
-    iteration 6000 == primal objective : 0.078120, dual objective : 0.422808, dual_gap : 0.344688
-
-.. parsed-literal::
-
-    
-    iteration 7000 == primal objective : 0.062277, dual objective : 0.380856, dual_gap : 0.318580
-
-.. parsed-literal::
-
-    
-    iteration 8000 == primal objective : 0.049665, dual objective : 0.342682, dual_gap : 0.293017
-
-.. parsed-literal::
-
-    
-    iteration 9000 == primal objective : 0.039624, dual objective : 0.308032, dual_gap : 0.268408
-
-.. parsed-literal::
-
-    
-    iteration 10000 == primal objective : 0.031630, dual objective : 0.276649, dual_gap : 0.245020
-
-.. parsed-literal::
-
-   
-    iteration 20000 == primal objective : 0.003491, dual objective : 0.091781, dual_gap : 0.088291
-
-.. parsed-literal::
-    
-    iteration 30000 == primal objective : 0.000478, dual objective : 0.030574, dual_gap : 0.030097
-
-.. parsed-literal::
-   
-    iteration 40000 == primal objective : 0.000076, dual objective : 0.012214, dual_gap : 0.012138
-   
-    iteration 50000 == primal objective : 0.000012, dual objective : 0.004865, dual_gap : 0.004853
-
-.. parsed-literal::
-   
-    iteration 80000 == primal objective : 0.000000, dual objective : 0.000306, dual_gap : 0.000306
-
-.. parsed-literal::
-    
-    iteration 142000 == primal objective : 0.000000, dual objective : 0.000001, dual_gap : 0.000001
-
-.. parsed-literal::
-
-    
-    convergence at iteration : 142064
-    dual gap : 0.000001
-
-.. parsed-literal::
-
     
     objective_function : 0.000000
     dual_objective_function : 0.000001
@@ -146,11 +67,9 @@ In[3]:
     Percent of good classification : 100/100
     Number of nulled coefficients : 0/400
 
+.. image:: Test_ISTA_files/Test_ISTA_no_reg.png
 
-.. parsed-literal::
 
-    /usr/lib/python2.7/site-packages/numpy/lib/utils.py:1132: DeprecationWarning: The compiler package is deprecated and removed in Python 3.x.
-      import compiler
 
 As expected, the objective functions steadily decrease.
 
@@ -170,80 +89,6 @@ In[4]:
 
 .. parsed-literal::
 
-    iteration 0 == primal objective : 95.985298, dual objective : -80764166.565843, dual_gap : 80764262.551141
-    iteration 1000 == primal objective : 0.448685, dual objective : -13043.989186, dual_gap : 13044.437871
-
-.. parsed-literal::
-
-    
-    iteration 2000 == primal objective : 0.223946, dual objective : -2826.587974, dual_gap : 2826.811920
-
-.. parsed-literal::
-
-    
-    iteration 3000 == primal objective : 0.159390, dual objective : -1151.272325, dual_gap : 1151.431716
-
-.. parsed-literal::
-
-    
-    iteration 4000 == primal objective : 0.126943, dual objective : -778.831352, dual_gap : 778.958295
-
-.. parsed-literal::
-
-    
-    iteration 5000 == primal objective : 0.102297, dual objective : -622.445820, dual_gap : 622.548116
-
-.. parsed-literal::
-
-    
-    iteration 20000 == primal objective : 0.008335, dual objective : -24.601880, dual_gap : 24.610216
-
-.. parsed-literal::
-
-    
-    iteration 40000 == primal objective : 0.004764, dual objective : -1.787364, dual_gap : 1.792128
-
-.. parsed-literal::
-
-    
-    iteration 90000 == primal objective : 0.004639, dual objective : -0.378365, dual_gap : 0.383004
-
-.. parsed-literal::
-    
-    iteration 150000 == primal objective : 0.004614, dual objective : -0.303484, dual_gap : 0.308098
-
-.. parsed-literal::
-    
-    iteration 175000 == primal objective : 0.004599, dual objective : -0.296884, dual_gap : 0.301483
-
-.. parsed-literal::
-
-    
-    iteration 202000 == primal objective : 0.004583, dual objective : -0.299972, dual_gap : 0.304555
-
-.. parsed-literal::
-    
-    iteration 300000 == primal objective : 0.004527, dual objective : -0.314015, dual_gap : 0.318542
-
-.. parsed-literal::
-
-    iteration 500000 == primal objective : 0.004411, dual objective : -0.344774, dual_gap : 0.349184
-
-.. parsed-literal::
-    
-    iteration 1000000 == primal objective : 0.004121, dual objective : -0.430301, dual_gap : 0.434421
-
-.. parsed-literal::
-    
-    iteration 1999000 == primal objective : 0.003866, dual objective : -2.879723, dual_gap : 2.883589
-
-.. parsed-literal::
-
-    
-    dual gap : 2.567866
-
-.. parsed-literal::
-
     
     objective_function : 0.003816
     dual_objective_function : -2.564050
@@ -251,6 +96,8 @@ In[4]:
     dual_loss : 0.030722
     Percent of good classification : 100/100
     Number of nulled coefficients : 99/400
+
+.. image:: Test_ISTA_files/Test_ISTA_no_reg.png
 
 Again, the objective functions steadily decrease.
 However, it seems that there is a numerical instability.

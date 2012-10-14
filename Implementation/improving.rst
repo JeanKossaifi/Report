@@ -4,7 +4,10 @@ Improving prox p=2, q=1
 First implementation
 --------------------
 
-The first implementation consisted of creating a new numpy array of the correct shape and then filling it with the corresponding values :
+Code
+++++
+
+The first implementation consisted of **creating a new numpy array of the correct shape and then filling it** with the corresponding values :
 
 .. code::
 
@@ -19,11 +22,7 @@ The first implementation consisted of creating a new numpy array of the correct 
         res = res*u
         return res
 
-
-Second implementation
----------------------
-
-The second implementation was modifying inplace the array argument: 
+The second implementation was **modifying inplace** the array argument: 
 
 .. code-block:: python
 
@@ -38,12 +37,10 @@ The second implementation was modifying inplace the array argument:
 
 
 Memory use
-----------
-
-Test program
-++++++++++++
+++++++++++
 
 We used memory_profiler for the tests. This is a tool that monitors, for every line of the program, the amount of memory (RAM) used.
+As we are to use big data, this criterion is very important.
 
 .. code-block:: python
    :linenos:
@@ -61,9 +58,6 @@ We used memory_profiler for the tests. This is a tool that monitors, for every l
    profile(u)
 
 To test the other program, we replace *prox_l21* by *test_prox_l21*.
-
-Results
-+++++++
 
 The results are summarised in the following tables.
 
@@ -94,7 +88,7 @@ Line #    Mem usage  Increment   Line Contents
 
 
 Execution time
---------------
+++++++++++++++
 
 The second criterion to consider is execution speed. 
 
@@ -103,20 +97,20 @@ To monitor it we use an IPython *magic*, %timeit, that indicates the execution t
 >>> u = np.arange(5000*10)
 
 For the first implementation
-+++++++++++++++++++++++++++
+***************************
 
 >>> %timeit test_prox_l21(u, 0.5, 5000, 10)
 1000 loops, best of 3: 381 us per loop
 
 
 For the second implementation
-+++++++++++++++++++++++++++++
+*****************************
 
 >>> %timeit prox_l21(u, 0.5, 5000, 10)
 1000 loops, best of 3: 415 us per loop
 
 Conclusion
-----------
+++++++++++
 The first method is slightly faster than the second, whereas using about the same amount of memory.
 Therefore we chose the first method
 
@@ -126,7 +120,7 @@ Another improvement
 Code
 ++++
 
-In this new version we reshape u, so that the new vector has as many lines as there are kernels, to be able to process kernel by kernel:
+In this new version we **reshape u**, so that the new vector has as many lines as there are kernels, to be able to process kernel by kernel:
 
 .. code::
 
@@ -162,10 +156,22 @@ New version :
 >>> %timeit test_prox_l21(u, 0.5, n, p)
 100 loops, best of 3: 2.51 ms per loop
 
-return res*u vs res=res*u; return res
--------------------------------------
+Another improvement
+-------------------
 
 Here, we check if the way in which we return the result has any influence.
+In particular, we compare these two ways of returning a result :
+
+.. code-block:: python
+   
+   return res*u
+
+and 
+
+.. code-block:: python
+   
+   res=res*u;
+   return res
 
 Return after affectation
 +++++++++++++
@@ -184,7 +190,7 @@ Result
 1000 loops, best of 3: 271 us per loop
 
 Direct return
-++++++++++++++++++++++++
++++++++++++++
 
 Tested code :
 *************
@@ -202,9 +208,7 @@ Result
 FINAL TESTS
 -----------
 
-Version 1
-+++++++++
-
+Here we compare the two following versions :
 
 .. code::
 
@@ -219,8 +223,7 @@ Version 1
        res = res*u
        return res
 
-Version 2
-+++++++++
+and 
 
 .. code-block:: python
 
@@ -247,7 +250,9 @@ Results
 Improving prox p=1 and q=2
 ==========================
 
-Version that creates a new array and fill it :
+Similarly, we improved this proximity operator.
+
+In particular, we created a version that **creates a new array and fill it** :
 
 .. code::
 
@@ -262,7 +267,7 @@ Version that creates a new array and fill it :
        return u.reshape(n_kernels*n_samples)
 
 
-Version that modifies the given array inplace:
+We compared this latter code to a version that **modifies the given array inplace**:
 
 .. code::
 
@@ -277,7 +282,7 @@ Version that modifies the given array inplace:
 
 Results
 -------
-We ran different tests with different data
+We ran different tests with different data to compare the **execution speed**.
 
 >>> %timeit prox_l12_test(u, 0.5, 5000, 10)
 100 loops, best of 3: 3.17 ms per loop
@@ -305,7 +310,7 @@ So we chose the second (test) version, the faster one.
 More advanced test
 ------------------
 
-Simple inplace modification version :
+We compared the version which simply **modify the data inplace** (eg without reallocating memory):
 
 .. code::
 
@@ -318,7 +323,7 @@ Simple inplace modification version :
            i = np.sign(i)*np.maximum(np.abs(i)-(l*sum_Ml)/((1+l*Ml)*norm(i, 2)), 0)
        return u
 
-Complex version creating a new array and filling it appropriately:
+to a more complex version **creating a new array and filling it appropriately**:
 
 .. code::
 
@@ -337,7 +342,7 @@ Complex version creating a new array and filling it appropriately:
                            norm(res[i*n_samples:(i+1)*n_samples], 2)), 0)
        return res
 
-We take, like before, n = 5000, p = 8
+For the execution time tests, we take, like before, n = 5000, p = 8
 u = np.arange(n*p)
 
 >>> %timeit prox_l12(u, 0.5, n, p)
@@ -348,4 +353,9 @@ u = np.arange(n*p)
 >>> %timeit test_prox_l12(u, 0.5, n, p)
 100 loops, best of 3: 3.11 ms per loop
 
-Why this time the "sliced" version (ie test_ version) is slower ??
+Here the simple version is faster, so we choose it (we usually follow the KISS principle, standing for "Keep it simple, stupid").
+
+Other functions
+---------------
+
+We proceeded like this for all the functions in order to optimise both the memory utilisation and the execution time.

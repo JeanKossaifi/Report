@@ -60,6 +60,7 @@ As previously said, ISTA is an iterative projected gradient algorithm. Therefore
 
 As previouslty mentionned, we use the hinge loss :math:`f_1(\bfalpha) = \sum_{i=1}^n\left|1-y_i\bfk_i^{\top}\bfalpha\right|_+` and the mixed norm penalty :math:`f_2(\bfalpha)  = \lambda/q \|\bfalpha\|_{pq}^q`, with :math:`p,q \geq   1`, which are both convex lower semicontinuous functions, nondifferentiable when their arguments are :math:`0`. In addition, :math:`\nabla_{\bfalpha} f_2(\bfalpha)` is only :math:`\beta`-Lipschtiz when :math:`p, q \in  \{1, 2\}`. We therefore limit the study of proximity operators to `\ell_1`, :math:`\ell_2`, :math:`\ell_{12}`, :math:`\ell_{21}` norms.
 
+Hence the convergence of ISTA with the previously mentioned characteristics.
 
 However the convergence rate is only in :math:`O(\frac{1}{N})` where :math:`N` is the number of iteration.  
 

@@ -9,6 +9,21 @@ FISTA
    .. autoclass:: Fista
       :members:
 
+Mixed norms
+-----------
+
+.. autofunction:: fista.mixed_norm
+
+Dual mixed norms
+----------------
+
+.. autofunction:: fista.dual_mixed_norm
+
+
+Compute the Lipschitz constant
+------------------------------
+
+.. autofunction:: fista._load_Lipschitz_constant
 
 Proximity functions
 -------------------
