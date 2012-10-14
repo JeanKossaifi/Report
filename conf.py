@@ -223,6 +223,8 @@ latex_elements = {
 \usepackage{url}
 \usepackage{stmaryrd}
 \usepackage{times}
+\usepackage{subfigure}
+\usepackage{tikz}
 
 %% Theorems, etc
 \newtheorem{theorem}{Theorem}

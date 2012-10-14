@@ -2,6 +2,8 @@ As previously said, ISTA is not the version used.
 
 However, this version has the advantage to be monotone. Thus, it is practical to test the prox functions as well as the sub-functions.
 
+Hence these tests to check the correctness of all the sub-functions used.
+
 
 Loading iris dataset
 ====================

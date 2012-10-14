@@ -2,13 +2,20 @@ Algorithm used
 ==============
 
 The main idea was to use a well-established and robust algorithm. Standing for Iterative Shrinkage Thresholding Algorithm, ISTA was the first choice as it was proved to converge [Fu, 1998 ; Daubechies et coll., 2004].
+   
+We will use an iterative projected gradient algorithm. The point in which we project is based on the last point and obtained by using the proximity operator.
 
+The proximity operator associated to a proper convex function :math:`\phi : \RR^p \rightarrow \RR`  and to :math:`\lambda > 0` is denoted by :math:`prox_{\lambda, \phi} : \RR^p \rightarrow \RR` and defined as follows :
+
+.. math::
+
+   prox_{\lambda, \phi}(y) = \argmin_{\bfalpha\in\RR^p} \frac{1}{2} \|y - \bfalpha\|_2^2 + \lambda \phi(\bfalpha).
+ 
 ISTA
 ----
 
 ISTA
    is an iterative projected gradient algorithm. 
-
 
 Algorithm
 ++++++++++
@@ -44,8 +51,14 @@ The problem is
 .. math::
    
    \min_{\alpha} f_1(\alpha) + f_2(\alpha)
-   
-As previously said, ISTA is an iterative projected gradient algorithm. Therefore it is proved to converge. However the convergence rate is only in :math:`O(\frac{1}{N})` where :math:`N` is the number of iteration.  
+
+As previously said, ISTA is an iterative projected gradient algorithm. Therefore it converges if :
+
+* :math:`f_1` is a proper convex function whose gradient is Lipschitz continuous: :math:`\exists L \in \RR_+` such that :math:`\|\nabla f_1 (x) - \nabla f_2(y)\| \le L \|x - y\|` for all :math:`x \text{ and }  y \text{ in } \RR^p \text{. } L` is called the Lipschitz constant.
+
+* :math:`f_2` is a proper convex function (not necessarily differentiable).
+
+ However the convergence rate is only in :math:`O(\frac{1}{N})` where :math:`N` is the number of iteration.  
 
 For this reason, we prefer using a another version of ISTA, which is faster, although more complicated. Hence its name, FISTA, standing for Fast ISTA.
 
@@ -82,4 +95,7 @@ Algorithm
 
 The result is the p-vector :math:`Z^{(k+1)}`, corresponding to the coefficients vector associated to each sample.
 
-Note : 
+Proximity operator
+------------------
+
+

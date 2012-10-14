@@ -49,13 +49,15 @@ The mixed norm :math:`l_2` equivalent to the simple norm :math:`l_2`.
 Group lasso
 +++++++++++
 
-The :math:`l_{12}` (p=1, q=2, r=2)  norm is also known as group lasso, as, due to its parsimony it selects only certain kernels.
+The :math:`l_{21}` (p=2, q=1) norm selects some elements only for each kernel. Thus, its parsimony is on the elements of each kernel, not on the kernels themselves.
 It was first introduced by Yuan et Lin [2006] in order to select the set of variables associated with relevant groups.
+
 
 Elitist lasso
 ++++++++++++++
 
-The :math:`l_{21}` (p=2, q=1, r=2) norm selects some elements only for each kernel. Thus, its parsimony is on the elements of each kernel, not on the kernels themselves.
+The :math:`l_{12}` (p=1, q=2)  norm is also known as group lasso, as, due to its parsimony it selects only certain kernels.
+
 
 Use of mixed norm in our problem
 --------------------------------
@@ -70,4 +72,64 @@ Thus, the problem becomes :
    :label: objective_function
 
    \min_{\bfalpha\in\realset^{n\kappa}}\sum_{i=1}^n\left|1-y_i\bfk_i^{\top}\bfalpha\right|_+^2+\frac{\lambda}{q}\|\bfalpha\|_{pq}^q
+
+
+.. math::
+   :nowrap:
+
+   \begin{figure*} \centering
+   \subfigure[$\|\cdot\|_{12}$]{\label{fig:p1q2}
+   \begin{tikzpicture}[scale=0.5]
+
+   %% On allume ce qu'il faut
+   % dans alpha
+   \filldraw[red!50] (3.5, 2.5) rectangle (3.75, 3);
+   \filldraw[green!50] (3.5, 1.75) rectangle (3.75, 2);
+   \filldraw[green!50] (3.5, 1) rectangle (3.75, 1.25);
+   \filldraw[blue!50] (3.5, 0) rectangle (3.75, 0.5);
+   % et dans K
+   \filldraw[red!50] (0,0) rectangle (0.5,1);
+   \filldraw[green!50] (1,0) rectangle (1.25,1);
+   \filldraw[green!50] (1.75,0) rectangle (2,1);
+   \filldraw[blue!50] (2.5,0) rectangle (3,1);
+
+   \draw (0,0) rectangle (3,1);
+   \draw (0,0) rectangle (1,1);
+   \draw (2,0) -- (2,1);
+
+   \draw (0.5,0) node[below] {$K_1$};
+   \draw (1.5,0) node[below] {$K_2$};
+   \draw (2.5,0) node[below] {$K_3$};
+
+   \draw (3.5, 0) rectangle (3.75, 3);
+   \draw (3.5, 1) -- (3.75, 1);
+   \draw (3.5, 2) -- (3.75, 2);
+   \draw (3.75,1.5) node[right] {$\bfalpha$};
+
+   \end{tikzpicture}
+   }\hspace*{5mm}
+   \subfigure[$\|\cdot\|_{21}$]{\label{fig:p2q1}
+   \begin{tikzpicture}[scale=0.5]
+   \draw (0,0) rectangle (3,1);
+   \filldraw[fill=red!50, draw=black] (0,0) rectangle (1,1);
+   \draw (2,0) -- (2,1);
+
+   \draw (0.5,0) node[below] {$K_1$};
+   \draw (1.5,0) node[below] {$K_2$};
+   \draw (2.5,0) node[below] {$K_3$};
+
+   \draw (3.5, 0) rectangle (3.75, 3);
+   \draw (3.5, 1) -- (3.75, 1);
+   \filldraw[fill=red!50, draw=black] (3.5, 2) rectangle (3.75, 3);
+   \draw (3.75,1.5) node[right] {$\bfalpha$};
+
+   \end{tikzpicture}
+   }
+   \caption{Expected sparsity structure of $\bfalpha$ for the two different norms
+     $\|\cdot\|_{pq}$ used, where white squares in $\bfalpha$
+     correspond to $0$ coefficients. The sparseness is
+     defined with respect to the kernels.}
+   \label{fig:sparsepattern}
+   \end{figure*}
+
 

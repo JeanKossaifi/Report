@@ -4,7 +4,7 @@ Internship report
 =================
 
 .. toctree::
-   :maxdepth: 6
+   :maxdepth: 2
 
    introduction
    Motivation/main
